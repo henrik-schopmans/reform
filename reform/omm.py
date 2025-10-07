@@ -46,12 +46,16 @@ class OMMTReplicas(MultiTReplicas):
     def _create_contexts(self):
         integrators = []
         contexts = []
-        if self._integrator_params["integrator"] != "Langevin":
-            raise NotImplementedError(f"Integrator {self._integrator_params['integrator']} is not implemented.")
+        integrator_type = self._integrator_params["integrator"]
+        if integrator_type not in ["Langevin", "LangevinMiddle"]:
+            raise NotImplementedError(f"Integrator {integrator_type} is not implemented.")
         friction = self._integrator_params["friction_in_inv_ps"] / unit.picosecond
         time_step = self._integrator_params["time_step_in_fs"] * unit.femtoseconds
         for i in range(self._N):
-            integrator = omm.LangevinIntegrator(self._temps[i] * unit.kelvin, friction, time_step)
+            if integrator_type == "Langevin":
+                integrator = omm.LangevinIntegrator(self._temps[i] * unit.kelvin, friction, time_step)
+            elif integrator_type == "LangevinMiddle":
+                integrator = omm.LangevinMiddleIntegrator(self._temps[i] * unit.kelvin, friction, time_step)
             if "constraint_tolerance" in self._integrator_params.keys():
                 integrator.setConstraintTolerance(self._integrator_params["constraint_tolerance"])
             else:

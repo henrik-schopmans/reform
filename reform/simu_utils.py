@@ -100,6 +100,14 @@ class MultiTSimulation:
                  replicated_system_additional_forces=[], verbose=True):
         if platform_prop is None:
             platform_prop = {}
+        
+        # Validate LangevinMiddle integrator constraints
+        if integrator_params.get("integrator") == "LangevinMiddle":
+            if interface != "single_threaded":
+                raise ValueError("LangevinMiddle integrator is only supported with interface='single_threaded'.")
+            if len(temps) != 1:
+                raise ValueError("LangevinMiddle integrator is only supported with a single replica.")
+        
         self._replicated = False
         if interface == "single_threaded":
             # reference implementation, single threaded, slow, but should work in any situation
