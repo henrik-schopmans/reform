@@ -97,8 +97,8 @@ class OMMTReplicas(MultiTReplicas):
 
     def _vel_scaling_factor(self, ori_index, target_index) -> float:
         """Return a scaling factor for exchanging velocities from ."""
-        if self._integrator_params["integrator"] != "Langevin":
-            raise NotImplementedError(f"Scaling with integrator {self._integrator_params['integrator']} is not yet "
+        if self._integrator_params["integrator"] not in  ["Langevin", "LangevinMiddle"]:
+            raise NotImplementedError(f"Velocity scaling with integrator {self._integrator_params['integrator']} is not yet "
                                       f"supported.")
         return np.sqrt(self._temps[target_index] / self._temps[ori_index])
 
