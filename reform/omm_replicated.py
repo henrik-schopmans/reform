@@ -164,14 +164,14 @@ class OMMTReplicas_replicated(OMMTReplicas):
             velocities = self._single_context.getState(getVelocities=True).getVelocities(asNumpy=True)
             self.set_velocities(index, velocities)
 
-    def minimize_energy_all(self, tolerance=10*unit.kilojoule/unit.mole, max_iterations: int = 0):
+    def minimize_energy_all(self, tolerance=10*unit.kilojoule_per_mole/unit.nanometer, max_iterations: int = 0):
         """Use openmm.LocalEnergyMinimizer to perform a local energy minimization. `max_iteration` should >=0,
         =0 means that the minimization will continue until the potential energy converges within the given `tolerance`.
         """
         assert max_iterations >= 0, "Invalid number for iterations, should be non-negative."
         omm.LocalEnergyMinimizer.minimize(self._contexts[0], tolerance, max_iterations)
 
-    def minimize_energy(self, index: int, tolerance=10*unit.kilojoule/unit.mole, max_iterations: int = 0):
+    def minimize_energy(self, index: int, tolerance=10*unit.kilojoule_per_mole/unit.nanometer, max_iterations: int = 0):
         """Use openmm.LocalEnergyMinimizer to perform a local energy minimization. `max_iteration` should >=0,
         =0 means that the minimization will continue until the potential energy converges within the given `tolerance`.
         """

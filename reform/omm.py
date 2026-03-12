@@ -71,7 +71,7 @@ class OMMTReplicas(MultiTReplicas):
         self._check_index(index)
         self._contexts[index].setPositions(positions)
 
-    def minimize_energy(self, index: int, tolerance=10*unit.kilojoule/unit.mole, max_iterations: int = 0):
+    def minimize_energy(self, index: int, tolerance=10*unit.kilojoule_per_mole/unit.nanometer, max_iterations: int = 0):
         """Use openmm.LocalEnergyMinimizer to perform a local energy minimization. `max_iteration` should >=0,
         =0 means that the minimization will continue until the potential energy converges within the given `tolerance`.
         """
