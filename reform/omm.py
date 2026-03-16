@@ -152,7 +152,7 @@ class OMMTReplicas(MultiTReplicas):
         """Return a numpy array of shape [self._N, number_of_particles, 3] containing particle positions from all
         replicas in given `length_unit` (can be "nm" or "angstrom")."""
         if length_unit == "nm":
-            l_unit = unit.nano * unit.meter
+            l_unit = unit.nanometer
         elif length_unit == "angstrom":
             l_unit = unit.angstrom
         else:
